@@ -247,6 +247,23 @@ namespace ScriptureMemorizer
     // Main program class
     class Program
     {
+        // Safe console clear method that handles exceptions
+        static void SafeConsoleClear()
+        {
+            try
+            {
+                Console.Clear();
+            }
+            catch (IOException)
+            {
+                // Fallback: print empty lines if Console.Clear() fails
+                for (int i = 0; i < 50; i++)
+                {
+                    Console.WriteLine();
+                }
+            }
+        }
+
         static void Main(string[] args)
         {
             ScriptureLibrary library = new ScriptureLibrary();
@@ -277,7 +294,7 @@ namespace ScriptureMemorizer
                 
                 while (!scriptureComplete && continueProgram)
                 {
-                    Console.Clear();
+                    SafeConsoleClear();
                     
                     // Display header
                     Console.ForegroundColor = ConsoleColor.Yellow;
@@ -346,7 +363,7 @@ namespace ScriptureMemorizer
             }
             
             // Final statistics
-            Console.Clear();
+            SafeConsoleClear();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Thank you for using Scripture Memorizer!");
             Console.ResetColor();
